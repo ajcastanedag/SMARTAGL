@@ -104,15 +104,3 @@ Exported CSV contains these required columns:
 ```r
 plot_flight_path(flight)
 ```
-
-### 3D Interactive Map
-
-```r
-plot_flight_map(flight)
-```
-
-## Examples
-
-* Simulated path over mountainous terrain
-* Comparison of fixed-height vs. true-AGL flight plans
-
