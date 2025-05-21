@@ -22,9 +22,9 @@ library(SMARTAGL)
 ## Quick Start
 
 ```r
-# 1. Define coordinates and DSM path
-deploy <- c(570560.87, 5513697.85) # UTM coordinates
-land <- c(570467.18, 5513850.40)
+# 1. Define coordinates ("EPSG:3763") and DSM path 
+deploy_coords <- c(-110289.7,-62576.0)
+land_coords <- c(-110077.1,-62963.2)
 dsm_path <- "path/to/dsm.tif"
 
 # 2. Generate flight path (50m AGL)
