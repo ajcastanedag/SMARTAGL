@@ -24,18 +24,20 @@ library(SMARTAGL)
 
 # 1. Load your DSM and define points
 ```r
-dsm_path <- "path/to/your_dsm.tif"
-deploy <- c(570560.87, 5513697.85) # UTM coordinates
-land <- c(570467.18, 5513850.40)
+deploy_coords <- c(-110289.7,-62576.0)
+land_coords <- c(-110077.1,-62963.2)
 ```
 
-# 2. Create flight path (50m AGL)
+# 2. Create flight path
 ```r
-flight <- create_flight_path(
-  deploy_coords = deploy,
-  land_coords = land,
-  dsm_path = dsm_path,
-  H = 50
+# Create flight path
+flight_path <- create_flight_path(
+  deploy_coords = deploy_coords,
+  land_coords = land_coords,
+  dsm_path = "../SMARTAGL/Sample/DSM_Port.tif",
+  N = 50,
+  H = 80,
+  crs_proj = "EPSG:3763"
 )
 ```
 
