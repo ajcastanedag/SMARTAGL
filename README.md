@@ -96,11 +96,3 @@ Exported CSV contains these required columns:
 | AltitudeAMSL | decimal | AMSL altitude     |
 | Speed        | decimal | Flight speed      |
 | Picture      | boolean | Camera trigger    |
-
-## Visualization
-
-### 2D Elevation Profile
-
-```r
-plot_flight_path(flight)
-```
