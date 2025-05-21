@@ -1,4 +1,4 @@
-# SMARTAGL: Smart Above Ground Level Flight Path Planner
+# SMARTAGL: Smart Above Ground Level Flight Transect Planner
 
 ## Core Features
 
