@@ -27,12 +27,14 @@ deploy_coords <- c(-110289.7,-62576.0)
 land_coords <- c(-110077.1,-62963.2)
 dsm_path <- "path/to/dsm.tif"
 
-# 2. Generate flight path (50m AGL)
-flight <- create_flight_path(
-  deploy_coords = deploy,
-  land_coords = land,
+# 2. Generate flight path 
+flight_path <- create_flight_path(
+  deploy_coords = deploy_coords,
+  land_coords = land_coords,
   dsm_path = dsm_path,
-  H = 50
+  N = 50,
+  H = 80,
+  crs_proj = "EPSG:3763"
 )
 
 # 3. Visualize
