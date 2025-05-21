@@ -13,7 +13,7 @@
 ```r
 # Install from GitHub
 if (!require("devtools")) install.packages("devtools")
-devtools::install_github("yourusername/SMARTAGL")
+devtools::install_github("ajcastanedag/SMARTAGL")
 
 # Load package
 library(SMARTAGL)
