@@ -22,7 +22,7 @@ devtools::install_github("ajcastanedag/SMARTAGL")
 library(SMARTAGL)
 ```
 
-# 1. Load your DSM and define points
+# 1. Define starting and landing points
 ```r
 deploy_coords <- c(-110289.7,-62576.0)
 land_coords <- c(-110077.1,-62963.2)
