@@ -1,18 +1,5 @@
 # SMARTAGL: Smart Above Ground Level Flight Path Planner
 
-![SMARTAGL Visualization](images/flight_profile.png)
-
-## Table of Contents
-
-* [Core Features](#core-features)
-* [Installation](#installation)
-* [Quick Start](#quick-start)
-* [Variable Reference](#variable-reference)
-* [UgCS Integration](#ugcs-integration)
-* [Visualization](#visualization)
-* [Examples](#examples)
-* [License](#license)
-
 ## Core Features
 
 * Terrain-aware drone path planning
@@ -50,11 +37,12 @@ flight <- create_flight_path(
 
 # 3. Visualize
 plot_flight_path(flight) # 2D profile
-plot_flight_map(flight)  # Interactive map
 
 # 4. Export for UgCS
 export_flight_path(flight, "flight_plan.csv")
 ```
+
+![SMARTAGL Visualization](Sample/profile.png)
 
 ## Variable Reference
 
