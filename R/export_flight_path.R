@@ -23,9 +23,9 @@ export_flight_path <- function(flight_path, output_path, include_headers = TRUE)
       Speed = 5,
       WP = dplyr::row_number(),
       Picture = FALSE,
-      UavYaw = NA,
-      CameraTilt = NA,
-      WaitTime = NA
+      UavYaw = "",
+      CameraTilt = "",
+      WaitTime = ""
     ) %>%
     sf::st_drop_geometry() %>%
     dplyr::select(
