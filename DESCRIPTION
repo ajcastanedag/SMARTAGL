@@ -1,12 +1,25 @@
 Package: SMARTAGL
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Smart Above Ground Level Flight Path Planning
+Version: 0.1.0
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Antonio", "Castaneda", email = "antonio.castanedag@gmail.com", role = c("aut", "cre"))
+Description: Creates optimized flight paths that maintain constant above ground level (AGL)
+    altitude while accounting for terrain elevation changes.
+License: MIT
 Encoding: UTF-8
+LazyData: true
+Imports:
+    sf,
+    terra,
+    dplyr,
+    readr,
+    ggplot2,
+    leaflet,
+    units,
+    purrr
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
