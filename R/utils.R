@@ -3,7 +3,7 @@
 #' Check if required packages are installed
 #' @keywords internal
 check_packages <- function() {
-  required <- c("sf", "terra", "dplyr", "ggplot2", "leaflet", "units", "purrr")
+  required <- c("sf", "terra", "dplyr", "ggplot2", "leaflet", "units", "purrr", "magrittr")
   missing <- setdiff(required, rownames(installed.packages()))
 
   if (length(missing) > 0) {
