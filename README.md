@@ -38,10 +38,10 @@ flight_path <- create_flight_path(
 )
 
 # 3. Visualize
-plot_flight_path(flight) # 2D profile
+plot_flight_path(flight_path) # 2D profile
 
 # 4. Export for UgCS
-export_flight_path(flight, "flight_plan.csv")
+export_flight_path(flight_path, "flight_plan.csv")
 ```
 
 ![SMARTAGL Visualization](Sample/profile.png)
