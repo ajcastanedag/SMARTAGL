@@ -7,6 +7,24 @@
 #' @return Data frame with X, Y, Z coordinates
 #' @keywords internal
 reconstruct_coords <- function(shifted_df, deploy_coords, land_coords, N) {
+
+  # First, filter the points to ensure minimum distance of 0.5m between consecutive points
+  if (nrow(shifted_df) > 1) {
+    keep <- rep(TRUE, nrow(shifted_df))
+    last_valid <- 1
+
+    for (i in 2:nrow(shifted_df)) {
+      if (abs(shifted_df$distance[i] - shifted_df$distance[last_valid]) >= 0.5) {
+        last_valid <- i
+      } else {
+        keep[i] <- FALSE
+      }
+    }
+
+    shifted_df <- shifted_df[keep, ]
+  }
+
+  # Continue with the original reconstruction
   original_line <- sf::st_sfc(sf::st_linestring(rbind(deploy_coords, land_coords)))
   total_length <- as.numeric(sf::st_length(original_line))
 
