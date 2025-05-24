@@ -14,7 +14,7 @@ reconstruct_coords <- function(shifted_df, deploy_coords, land_coords, N) {
     last_valid <- 1
 
     for (i in 2:nrow(shifted_df)) {
-      if (abs(shifted_df$distance[i] - shifted_df$distance[last_valid]) >= 0.5) {
+      if (abs(shifted_df$distance[i] - shifted_df$distance[last_valid]) >= 1.01) {
         last_valid <- i
       } else {
         keep[i] <- FALSE
