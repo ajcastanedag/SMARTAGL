@@ -27,7 +27,9 @@ library(SMARTAGL)
 deploy_coords <- c(-110289.7,-62576.0)
 land_coords <- c(-110077.1,-62963.2)
 dsm_path <- "path/to/dsm.tif"
+```
 
+```r
 # 2. Generate flight path
 flight_path <- create_flight_path(
   deploy_coords = deploy_coords,
@@ -38,17 +40,23 @@ flight_path <- create_flight_path(
   crs_proj = "EPSG:3763",
   minDist = 0.5
 )
+```
 
+```r
 # 3. Visualize Profile
 plot_flight_path(flight_path)
+```
 
 ![SMARTAGL Visualization](Sample/profile.png)
 
+```r
 # 4. Visualize Map
 plot_flight_map(flight_path)
+```
 
 ![SMARTAGL Visualization](Sample/map.png)
 
+```r
 # 5. Export for UgCS
 export_flight_path(flight_path =  flight_path,
                    output_path = ".../flight_path.csv",
