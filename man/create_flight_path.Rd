@@ -10,7 +10,8 @@ create_flight_path(
   dsm_path,
   N = 100,
   H = 10,
-  crs_proj = "EPSG:32632"
+  crs_proj = "EPSG:32632",
+  minDist = 1
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ create_flight_path(
 \item{H}{Desired height above ground level (AGL) in meters (default = 10)}
 
 \item{crs_proj}{Projected CRS (default is UTM Zone 32N - EPSG:32632)}
+
+\item{minDist}{Min distance between trajectory points - UgCS restricted (default = 1)}
 }
 \value{
 A list containing flight path components

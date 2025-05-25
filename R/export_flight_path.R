@@ -6,6 +6,7 @@
 #' @return Invisible NULL, writes file to disk
 #' @export
 export_flight_path <- function(flight_path, output_path, include_headers = TRUE) {
+
   # Transform coordinates to WGS84
   final_coords_sf <- sf::st_as_sf(
     flight_path$final_coords,

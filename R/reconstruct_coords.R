@@ -4,9 +4,13 @@
 #' @param deploy_coords Deployment coordinates
 #' @param land_coords Landing coordinates
 #' @param N Number of output points
+#' @param minDist Min distance between trajectory points - UgCS restricted
 #' @return Data frame with X, Y, Z coordinates
 #' @keywords internal
-reconstruct_coords <- function(shifted_df, deploy_coords, land_coords, N) {
+reconstruct_coords <- function(shifted_df, deploy_coords, land_coords, N, minDist) {
+
+  # Add small buffer to min distance
+  minDistB <- minDist + 0.1
 
   # First, filter the points to ensure minimum distance of 0.5m between consecutive points
   if (nrow(shifted_df) > 1) {
@@ -14,7 +18,7 @@ reconstruct_coords <- function(shifted_df, deploy_coords, land_coords, N) {
     last_valid <- 1
 
     for (i in 2:nrow(shifted_df)) {
-      if (abs(shifted_df$distance[i] - shifted_df$distance[last_valid]) >= 1.01) {
+      if (abs(shifted_df$distance[i] - shifted_df$distance[last_valid]) >= minDistB) {
         last_valid <- i
       } else {
         keep[i] <- FALSE

@@ -6,10 +6,11 @@
 #' @param N Number of sample points along the path (default = 100)
 #' @param H Desired height above ground level (AGL) in meters (default = 10)
 #' @param crs_proj Projected CRS (default is UTM Zone 32N - EPSG:32632)
+#' @param minDist Min distance between trajectory points - UgCS restricted (default = 1)
 #' @return A list containing flight path components
 #' @importFrom magrittr %>%
 #' @export
-create_flight_path <- function(deploy_coords, land_coords, dsm_path, N = 100, H = 10, crs_proj = "EPSG:32632") {
+create_flight_path <- function(deploy_coords, land_coords, dsm_path, N = 100, H = 10, crs_proj = "EPSG:32632", minDist=1) {
 
   # Validate inputs
   validate_inputs(deploy_coords, land_coords, dsm_path, N, H)
@@ -43,7 +44,8 @@ create_flight_path <- function(deploy_coords, land_coords, dsm_path, N = 100, H 
     shifted_df = filtered_points,
     deploy_coords = deploy_coords,
     land_coords = land_coords,
-    N = N
+    N = N,
+    minDist = minDist
   )
 
   # Return all components
