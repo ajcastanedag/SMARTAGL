@@ -65,7 +65,7 @@ plot_flight_map <- function(flight_path) {
       data = final_coords_sf,
       radius = 5,
       stroke = FALSE,
-      color = ~scales::colorNumeric("YlOrRd", domain = final_coords_sf$Z)(Z), # Color by Z value
+      color = ~leaflet::colorNumeric("YlOrRd", domain = final_coords_sf$Z)(Z), # Color by Z value
       fillOpacity = 0.8,
       popup = ~paste0(
         "<b>Flight Point</b><br>",
