@@ -4,7 +4,7 @@
 \alias{export_flight_path}
 \title{Export flight path to CSV}
 \usage{
-export_flight_path(flight_path, output_path, include_headers = TRUE)
+export_flight_path(flight_path, output_path, include_headers = TRUE, speed = 5)
 }
 \arguments{
 \item{flight_path}{Flight path object created by create_flight_path()}
@@ -12,6 +12,8 @@ export_flight_path(flight_path, output_path, include_headers = TRUE)
 \item{output_path}{Path to save the CSV file}
 
 \item{include_headers}{Logical, whether to include column headers (default TRUE)}
+
+\item{speed}{Trajectory speed (default = 5)}
 }
 \value{
 Invisible NULL, writes file to disk

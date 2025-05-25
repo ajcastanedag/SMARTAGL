@@ -3,9 +3,10 @@
 #' @param flight_path Flight path object created by create_flight_path()
 #' @param output_path Path to save the CSV file
 #' @param include_headers Logical, whether to include column headers (default TRUE)
+#' @param speed Trajectory speed (default = 5)
 #' @return Invisible NULL, writes file to disk
 #' @export
-export_flight_path <- function(flight_path, output_path, include_headers = TRUE) {
+export_flight_path <- function(flight_path, output_path, include_headers = TRUE, speed = 5) {
 
   # Transform coordinates to WGS84
   final_coords_sf <- sf::st_as_sf(
@@ -21,12 +22,12 @@ export_flight_path <- function(flight_path, output_path, include_headers = TRUE)
       Longitude = sf::st_coordinates(.)[,1],
       Latitude = sf::st_coordinates(.)[,2],
       AltitudeAMSL = .data$Z,
-      Speed = 5,
+      Speed = speed,
       WP = dplyr::row_number(),
       Picture = FALSE,
-      UavYaw = "",
-      CameraTilt = "",
-      WaitTime = ""
+      UavYaw = "",                                                              # Temporary disabled
+      CameraTilt = "",                                                          # Temporary disabled
+      WaitTime = ""                                                             # Temporary disabled
     ) %>%
     sf::st_drop_geometry() %>%
     dplyr::select(
