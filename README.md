@@ -64,6 +64,13 @@ export_flight_path(flight_path =  flight_path,
                    speed = 2.1)
 ```
 
+> ⚠️ **WARNING**
+> The produced CSV file can be imported into UGCS.
+> **❗ Please double-check all parameters and ensure the flight path corresponds to the terrain!**
+> **Safety of operation depends on this!**
+
+![SMARTAGL Visualization](Sample/UgCS_cap.png)
+
 ## Variable Reference
 
 ### Input Variables
