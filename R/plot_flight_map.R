@@ -3,7 +3,6 @@
 #' @param flight_path Flight path object created by create_flight_path()
 #' @return A leaflet map object
 #' @export
-#'
 plot_flight_map <- function(flight_path) {
 
   # Transform coordinates to WGS84
@@ -38,7 +37,7 @@ plot_flight_map <- function(flight_path) {
 
 
   # # Create Leaflet map
-  leaflet_map <- leaflet() %>%
+  leaflet_map <-  leaflet::leaflet() %>%
     leaflet::addTiles() %>%
 
     # Add start and end points
