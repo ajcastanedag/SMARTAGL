@@ -47,14 +47,14 @@ flight_path <- create_flight_path(
 plot_flight_path(flight_path)
 ```
 
-![SMARTAGL Visualization](Sample/profile.png)
+![SMARTAGL Visualization](Sample/Profile.png)
 
 ```r
 # 4. Visualize Map
 plot_flight_map(flight_path)
 ```
 
-![SMARTAGL Visualization](Sample/map.png)
+![SMARTAGL Visualization](Sample/Map.png)
 
 ```r
 # 5. Export for UgCS
