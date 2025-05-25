@@ -27,11 +27,34 @@ create_flight_path(
 
 \item{crs_proj}{Projected CRS (default is UTM Zone 32N - EPSG:32632)}
 
-\item{minDist}{Min distance between trajectory points - UgCS restricted (default = 1)}
+\item{minDist}{Minimum distance between trajectory points (UgCS restriction, default = 1)}
 }
 \value{
-A list containing flight path components
+A list containing:
+\itemize{
+\item \code{deploy_coords}: Original deployment coordinates
+\item \code{land_coords}: Original landing coordinates
+\item \code{sampled_points}: sf object of sampled points with elevations
+\item \code{terrain_line}: Terrain profile line
+\item \code{simple_shift_line}: Simple elevation-shifted line
+\item \code{smart_agl_line}: Optimized AGL path (simplified)
+\item \code{final_coords}: Final flight coordinates data frame
+\item \code{parameters}: List of input parameters (N, H, crs)
+}
 }
 \description{
-Create a smart AGL flight path
+Generates an optimized flight path that maintains constant height above ground level (AGL)
+between deployment and landing coordinates, using digital surface model (DSM) data
+for terrain awareness.
+}
+\examples{
+\dontrun{
+flight_path <- create_flight_path(
+  deploy_coords = c(580000, 5510000),
+  land_coords = c(580500, 5510500),
+  dsm_path = "path/to/dsm.tif",
+  H = 15
+)
+}
+
 }

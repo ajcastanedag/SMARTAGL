@@ -7,11 +7,39 @@
 plot_flight_map(flight_path)
 }
 \arguments{
-\item{flight_path}{Flight path object created by create_flight_path()}
+\item{flight_path}{A flight path object created by \code{create_flight_path()},
+containing at minimum:
+\itemize{
+\item \code{final_coords} - Data frame of flight coordinates (X, Y, Z)
+\item \code{deploy_coords} - Start point coordinates (x, y)
+\item \code{land_coords} - End point coordinates (x, y)
+\item \code{parameters$crs} - Coordinate reference system
+}}
 }
 \value{
-A leaflet map object
+A Leaflet map object with:
+\itemize{
+\item Green marker for start point
+\item Orange marker for end point
+\item Dashed line connecting start/end points
+\item Flight path points colored by altitude (YlOrRd palette)
+\item Interactive popups with coordinate information
+\item Legend identifying map elements
+}
 }
 \description{
-Create interactive map of flight path
+Generates a Leaflet map visualizing a flight path with start/end points and
+trajectory colored by altitude. The map includes interactive popups with
+coordinate information.
+}
+\examples{
+\dontrun{
+# Create a flight path first
+flight_data <- create_flight_path(...)
+
+# Generate and display the map
+flight_map <- plot_flight_map(flight_data)
+flight_map
+}
+
 }

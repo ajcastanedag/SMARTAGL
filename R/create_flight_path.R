@@ -1,14 +1,46 @@
 #' Create a smart AGL flight path
 #'
+#' Generates an optimized flight path that maintains constant height above ground level (AGL)
+#' between deployment and landing coordinates, using digital surface model (DSM) data
+#' for terrain awareness.
+#'
 #' @param deploy_coords Numeric vector of length 2 with deployment coordinates (x,y)
 #' @param land_coords Numeric vector of length 2 with landing coordinates (x,y)
 #' @param dsm_path Path to Digital Surface Model (DSM) raster file
 #' @param N Number of sample points along the path (default = 100)
 #' @param H Desired height above ground level (AGL) in meters (default = 10)
 #' @param crs_proj Projected CRS (default is UTM Zone 32N - EPSG:32632)
-#' @param minDist Min distance between trajectory points - UgCS restricted (default = 1)
-#' @return A list containing flight path components
+#' @param minDist Minimum distance between trajectory points (UgCS restriction, default = 1)
+#'
+#' @return A list containing:
+#' \itemize{
+#'   \item \code{deploy_coords}: Original deployment coordinates
+#'   \item \code{land_coords}: Original landing coordinates
+#'   \item \code{sampled_points}: sf object of sampled points with elevations
+#'   \item \code{terrain_line}: Terrain profile line
+#'   \item \code{simple_shift_line}: Simple elevation-shifted line
+#'   \item \code{smart_agl_line}: Optimized AGL path (simplified)
+#'   \item \code{final_coords}: Final flight coordinates data frame
+#'   \item \code{parameters}: List of input parameters (N, H, crs)
+#' }
+#'
+#' @examples
+#' \dontrun{
+#' flight_path <- create_flight_path(
+#'   deploy_coords = c(580000, 5510000),
+#'   land_coords = c(580500, 5510500),
+#'   dsm_path = "path/to/dsm.tif",
+#'   H = 15
+#' )
+#' }
+#'
 #' @importFrom magrittr %>%
+#' @importFrom terra rast project extract vect
+#' @importFrom sf st_sfc st_point st_linestring st_coordinates st_line_sample
+#' @importFrom sf st_cast st_as_sf st_distance st_segmentize st_buffer
+#' @importFrom sf st_boundary st_simplify
+#' @importFrom stats approx
+#' @importFrom dplyr rename filter arrange
 #' @export
 create_flight_path <- function(deploy_coords, land_coords, dsm_path, N = 100, H = 10, crs_proj = "EPSG:32632", minDist=1) {
 

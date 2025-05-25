@@ -2,22 +2,54 @@
 % Please edit documentation in R/export_flight_path.R
 \name{export_flight_path}
 \alias{export_flight_path}
-\title{Export flight path to CSV}
+\title{Export flight path to CSV format}
 \usage{
 export_flight_path(flight_path, output_path, include_headers = TRUE, speed = 5)
 }
 \arguments{
-\item{flight_path}{Flight path object created by create_flight_path()}
+\item{flight_path}{Flight path object created by \code{create_flight_path()}, containing:
+\itemize{
+\item \code{final_coords} - Data frame with X, Y, Z coordinates
+\item \code{parameters$crs} - Original coordinate reference system
+}}
 
-\item{output_path}{Path to save the CSV file}
+\item{output_path}{Path where the CSV file should be saved (character)}
 
-\item{include_headers}{Logical, whether to include column headers (default TRUE)}
+\item{include_headers}{Logical indicating whether to include column headers in output
+(default = TRUE). When FALSE, outputs only Latitude, Longitude, Altitude columns.}
 
-\item{speed}{Trajectory speed (default = 5)}
+\item{speed}{Flight speed to assign to all waypoints in m/s (numeric, default = 5)}
 }
 \value{
-Invisible NULL, writes file to disk
+Invisibly returns NULL. Writes CSV file to specified path with columns:
+\itemize{
+\item WP - Waypoint number
+\item Latitude - WGS84 latitude (decimal degrees)
+\item Longitude - WGS84 longitude (decimal degrees)
+\item AltitudeAMSL - Altitude above mean sea level (meters)
+\item Speed - Flight speed (m/s)
+\item Picture - Logical for camera trigger (always FALSE in current implementation)
+\item UavYaw - Drone yaw angle (currently unused)
+\item CameraTilt - Gimbal tilt angle (currently unused)
+\item WaitTime - Waypoint hold time (currently unused)
+}
+When \code{include_headers = FALSE}, outputs only Latitude, Longitude, Altitude columns.
 }
 \description{
-Export flight path to CSV
+Converts a flight path object to CSV format suitable for drone flight controllers,
+with options to include/exclude headers and set flight speed. The function handles
+coordinate transformation to WGS84 (EPSG:4326) automatically.
+}
+\examples{
+\dontrun{
+# Create flight path first
+path <- create_flight_path(...)
+
+# Export with headers
+export_flight_path(path, "flight_plan.csv")
+
+# Export without headers for simple controllers
+export_flight_path(path, "minimal_plan.csv", include_headers = FALSE)
+}
+
 }
