@@ -4,7 +4,16 @@
 \alias{make_calfig}
 \title{Create a calibration figure using two intersecting circles}
 \usage{
-make_calfig(Lat, Lon, diam = 15, angle = 90, speed = 5, res = 10, H = 80)
+make_calfig(
+  Lat,
+  Lon,
+  diam = 15,
+  angle = 90,
+  speed_c = 5,
+  res = 10,
+  H = 80,
+  startH = -500
+)
 }
 \arguments{
 \item{Lat}{Latitude coordinate of the intersection point (numeric)}
@@ -15,11 +24,13 @@ make_calfig(Lat, Lon, diam = 15, angle = 90, speed = 5, res = 10, H = 80)
 
 \item{angle}{Initial angle in degrees (0-360) for the first circle's orientation (numeric, default = 90)}
 
-\item{speed}{Speed value to assign to all points (numeric, default = 5)}
+\item{speed_c}{Speed value to assign to all points (numeric, default = 5)}
 
 \item{res}{Number of points to generate per circle (minimum 4) (integer, default = 10)}
 
 \item{H}{Height value to assign to all points (numeric, default = 80)}
+
+\item{startH}{Height value of the DSM point (numeric, default = -500)}
 }
 \value{
 A matrix containing the flight path coordinates and parameters with columns:

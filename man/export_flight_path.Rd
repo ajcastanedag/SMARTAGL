@@ -4,7 +4,7 @@
 \alias{export_flight_path}
 \title{Export flight path to CSV format}
 \usage{
-export_flight_path(flight_path, output_path, include_headers = TRUE, speed = 5)
+export_flight_path(flight_path, output_path, include_headers = TRUE)
 }
 \arguments{
 \item{flight_path}{Flight path object created by \code{create_flight_path()}, containing:
@@ -17,8 +17,6 @@ export_flight_path(flight_path, output_path, include_headers = TRUE, speed = 5)
 
 \item{include_headers}{Logical indicating whether to include column headers in output
 (default = TRUE). When FALSE, outputs only Latitude, Longitude, Altitude columns.}
-
-\item{speed}{Flight speed to assign to all waypoints in m/s (numeric, default = 5)}
 }
 \value{
 Invisibly returns NULL. Writes CSV file to specified path with columns:

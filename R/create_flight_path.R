@@ -11,6 +11,17 @@
 #' @param H Desired height above ground level (AGL) in meters (default = 10)
 #' @param crs_proj Projected CRS (default is UTM Zone 32N - EPSG:32632)
 #' @param minDist Minimum distance between trajectory points (UgCS restriction, default = 1)
+#' @param speed_p Flight speed to assign to waypoints in m/s (numeric, default = 5)
+#'#' @param calfig_params Optional list of parameters for calibration figure:
+#'        \itemize{
+#'          \item \code{Lat}: Latitude coordinate for calibration figure
+#'          \item \code{Lon}: Longitude coordinate for calibration figure
+#'          \item \code{angle}: Initial angle in degrees (default = 90)
+#'          \item \code{res}: Number of points per circle (default = 12)
+#'          \item \code{diam}: Diameter of circles in meters (default = 15)
+#'          \item \code{speed_c}: Speed value for calibration points (default = 5)
+#'          \item \code{H_cal}: Height for calibration points (default = same as main H)
+#'        }
 #'
 #' @return A list containing:
 #' \itemize{
@@ -42,7 +53,7 @@
 #' @importFrom stats approx
 #' @importFrom dplyr rename filter arrange
 #' @export
-create_flight_path <- function(deploy_coords, land_coords, dsm_path, N = 100, H = 10, crs_proj = "EPSG:32632", minDist=1) {
+create_flight_path <- function(deploy_coords, land_coords, dsm_path, N = 100, H = 10, speed_p = 5, crs_proj = "EPSG:32632", minDist=1, calfig_params = NULL) {
 
   # Validate inputs
   validate_inputs(deploy_coords, land_coords, dsm_path, N, H)
@@ -77,8 +88,48 @@ create_flight_path <- function(deploy_coords, land_coords, dsm_path, N = 100, H 
     deploy_coords = deploy_coords,
     land_coords = land_coords,
     N = N,
-    minDist = minDist
+    minDist = minDist,
+    speed = speed_p,
+    type = "Trajectory"
   )
+
+
+
+  # Merge final coordinates from trajectory and from calibration figures
+  if (!is.null(calfig_params) && length(calfig_params) > 0) {
+
+    # Get AMSL heith for starting point
+    startH <- terra::extract(DSM, matrix(c(calfig_params[["Lat"]], calfig_params[["Lon"]]), ncol = 2))
+
+    # Add startH to the list
+    calfig_params$startH <- startH[,1]
+
+    # Make calibration figures (use speed_c to append)
+    calfig <- do.call(make_calfig, calfig_params)
+    #plot(calfig[, "X"], calfig[, "Y"], type = "b", asp = 1)
+    #print(calfig)
+
+    # Convert calfig matrix to dataframe
+    calfig_df <- as.data.frame(calfig)
+
+    # Add 'type' column filled with "Cal"
+    calfig_df$Type <- "Cal"
+
+    # Append calibration figures at the beginning and at the end of final_coords
+    final_coords <- dplyr::bind_rows(calfig_df, final_coords, calfig_df)
+
+    # Remove consecutive duplicates while preserving order
+    final_coords <- final_coords[c(TRUE, !(final_coords$X[-1] == final_coords$X[-nrow(final_coords)] &
+                                             final_coords$Y[-1] == final_coords$Y[-nrow(final_coords)] &
+                                             final_coords$Z[-1] == final_coords$Z[-nrow(final_coords)])), ]
+
+    print("Two calibration figures were included in flight path.")
+
+  } else {
+
+    print("Calibration figures were not included in flight path, calfig_params() is an empty list")
+
+  }
 
   # Return all components
   list(

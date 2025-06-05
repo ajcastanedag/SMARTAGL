@@ -12,7 +12,6 @@
 #' @param output_path Path where the CSV file should be saved (character)
 #' @param include_headers Logical indicating whether to include column headers in output
 #' (default = TRUE). When FALSE, outputs only Latitude, Longitude, Altitude columns.
-#' @param speed Flight speed to assign to all waypoints in m/s (numeric, default = 5)
 #'
 #' @return Invisibly returns NULL. Writes CSV file to specified path with columns:
 #' \itemize{
@@ -45,7 +44,7 @@
 #' @importFrom readr write_csv
 #' @importFrom utils write.table
 #' @export
-export_flight_path <- function(flight_path, output_path, include_headers = TRUE, speed = 5) {
+export_flight_path <- function(flight_path, output_path, include_headers = TRUE) {
 
   # Transform coordinates to WGS84
   final_coords_sf <- sf::st_as_sf(
@@ -61,7 +60,7 @@ export_flight_path <- function(flight_path, output_path, include_headers = TRUE,
       Longitude = sf::st_coordinates(.)[,1],
       Latitude = sf::st_coordinates(.)[,2],
       AltitudeAMSL = .data$Z,
-      Speed = speed,
+      Speed = .data$Speed,
       WP = dplyr::row_number(),
       Picture = FALSE,
       UavYaw = "",                                                              # Temporary disabled

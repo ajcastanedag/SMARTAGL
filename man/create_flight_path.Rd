@@ -10,8 +10,10 @@ create_flight_path(
   dsm_path,
   N = 100,
   H = 10,
+  speed_p = 5,
   crs_proj = "EPSG:32632",
-  minDist = 1
+  minDist = 1,
+  calfig_params = NULL
 )
 }
 \arguments{
@@ -24,6 +26,18 @@ create_flight_path(
 \item{N}{Number of sample points along the path (default = 100)}
 
 \item{H}{Desired height above ground level (AGL) in meters (default = 10)}
+
+\item{speed_p}{Flight speed to assign to waypoints in m/s (numeric, default = 5)
+#' @param calfig_params Optional list of parameters for calibration figure:
+\itemize{
+\item \code{Lat}: Latitude coordinate for calibration figure
+\item \code{Lon}: Longitude coordinate for calibration figure
+\item \code{angle}: Initial angle in degrees (default = 90)
+\item \code{res}: Number of points per circle (default = 12)
+\item \code{diam}: Diameter of circles in meters (default = 15)
+\item \code{speed_c}: Speed value for calibration points (default = 5)
+\item \code{H_cal}: Height for calibration points (default = same as main H)
+}}
 
 \item{crs_proj}{Projected CRS (default is UTM Zone 32N - EPSG:32632)}
 

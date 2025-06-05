@@ -4,7 +4,15 @@
 \alias{reconstruct_coords}
 \title{Reconstruct projected coordinates from distance-elevation data}
 \usage{
-reconstruct_coords(shifted_df, deploy_coords, land_coords, N, minDist)
+reconstruct_coords(
+  shifted_df,
+  deploy_coords,
+  land_coords,
+  N,
+  minDist,
+  speed,
+  type
+)
 }
 \arguments{
 \item{shifted_df}{Data frame with distance and elevation columns}
@@ -16,6 +24,10 @@ reconstruct_coords(shifted_df, deploy_coords, land_coords, N, minDist)
 \item{N}{Number of output points}
 
 \item{minDist}{Min distance between trajectory points - UgCS restricted}
+
+\item{speed}{Flight speed to assign to waypoints in m/s}
+
+\item{type}{Type of point, used to filter the plots}
 }
 \value{
 Data frame with X, Y, Z coordinates

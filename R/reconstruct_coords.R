@@ -5,9 +5,11 @@
 #' @param land_coords Landing coordinates
 #' @param N Number of output points
 #' @param minDist Min distance between trajectory points - UgCS restricted
+#' @param speed Flight speed to assign to waypoints in m/s
+#' @param type Type of point, used to filter the plots
 #' @return Data frame with X, Y, Z coordinates
 #' @keywords internal
-reconstruct_coords <- function(shifted_df, deploy_coords, land_coords, N, minDist) {
+reconstruct_coords <- function(shifted_df, deploy_coords, land_coords, N, minDist, speed, type) {
 
   # Add small buffer to min distance
   minDistB <- minDist + 0.1
@@ -55,5 +57,12 @@ reconstruct_coords <- function(shifted_df, deploy_coords, land_coords, N, minDis
   }
 
   names(result)[3] <- "Z"
+
+  # Add the Speed field
+  result$Speed <- speed
+
+  # Add the type field
+  result$Type <- type
+
   return(result)
 }
