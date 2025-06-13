@@ -2,25 +2,40 @@ Package: SMARTAGL
 Title: Smart Above Ground Level Flight Path Planning
 Version: 0.1.0
 Authors@R: 
-    person("Antonio", "Castaneda", email = "antonio.castanedag@gmail.com", role = c("aut", "cre"))
-Description: Creates optimized flight paths that maintain constant above ground level (AGL)
-    altitude while accounting for terrain elevation changes.
-License: MIT
+    person("Antonio", "Castaneda", 
+           email = "antonio.castanedag@gmail.com", 
+           role = c("aut", "cre"))
+Description: Provides advanced terrain-aware flight path planning with two core methods:
+    (1) True constant AGL height (SMARTAGL) and (2) Angled sensor terrain following. 
+    Generates optimized paths for drone missions with digital elevation model integration,
+    automatic coordinate transformation, and UgCS-compatible exports.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/yourusername/SMARTAGL
+BugReports: https://github.com/yourusername/SMARTAGL/issues
+Depends: 
+    R (>= 3.6.0)
 Imports:
-    sf,
-    terra,
-    dplyr,
-    readr,
-    ggplot2,
-    leaflet,
-    units,
-    purrr,
-    magrittr
+    sf (>= 1.0.0),
+    terra (>= 1.5.0),
+    dplyr (>= 1.0.0),
+    readr (>= 2.0.0),
+    ggplot2 (>= 3.4.0),
+    leaflet (>= 2.1.0),
+    units (>= 0.8.0),
+    purrr (>= 1.0.0),
+    magrittr (>= 2.0.0),
+    htmlwidgets (>= 1.5.0)
 Suggests:
     testthat (>= 3.0.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr,
+    spelling,
+    devtools
+VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Config/testthat/edition: 3
+Language: en-US
