@@ -71,7 +71,7 @@ create_angled_flight_path <- function(deploy_coords, land_coords, dsm_path, N = 
   line <- points_and_line$line
 
   # Create polygon from the raster's extent
-  extent_poly <- terra::as.polygons(ext(DSM), crs = crs_proj)
+  extent_poly <- terra::as.polygons(terra::ext(DSM), crs = crs_proj)
 
   # Reproject the polygon to WGS84
   extent_poly_wgs84 <- project(extent_poly, "EPSG:4326") %>% sf::st_as_sf()
