@@ -1,5 +1,5 @@
 #' @title UgCS Flight Planning Toolkit
-#' @name flightpathplanning
+#' @name SMARTAGL
 #' @description
 #' Provides an intermediate planning layer for complex flight operations destined for UgCS execution.
 #'
