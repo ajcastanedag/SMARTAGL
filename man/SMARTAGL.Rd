@@ -30,6 +30,5 @@ Available functions:
 Useful resources:
 \itemize{
 \item UgCS official documentation: \url{https://www.ugcs.com}
-\item Flight planning best practices: \url{https://www.example.com/flight-planning}
 }
 }
