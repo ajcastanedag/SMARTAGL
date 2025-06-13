@@ -2,44 +2,87 @@
 % Please edit documentation in R/plot_flight_map.R
 \name{plot_flight_map}
 \alias{plot_flight_map}
-\title{Create interactive map of flight path}
+\title{Create Interactive Flight Path Map}
 \usage{
 plot_flight_map(flight_path)
 }
 \arguments{
-\item{flight_path}{A flight path object created by \code{create_flight_path()},
-containing at minimum:
+\item{flight_path}{A flight path object created by \code{\link{create_sagl_flight_path}}
+containing these required elements:
 \itemize{
-\item \code{final_coords} - Data frame of flight coordinates (X, Y, Z)
-\item \code{deploy_coords} - Start point coordinates (x, y)
-\item \code{land_coords} - End point coordinates (x, y)
-\item \code{parameters$crs} - Coordinate reference system
+\item \code{final_coords}: Data frame with columns (X, Y, Z)
+\item \code{deploy_coords}: Numeric vector (x,y) of start position
+\item \code{land_coords}: Numeric vector (x,y) of end position
+\item \code{parameters$crs}: Original coordinate reference system
+\item \code{dsm_extent}: Polygon of DSM coverage area (sf object)
+\item \code{aoi_kml}: Flight corridor polygon (sf object)
 }}
 }
 \value{
-A Leaflet map object with:
+An interactive Leaflet map object with:
 \itemize{
-\item Green marker for start point
-\item Orange marker for end point
-\item Dashed line connecting start/end points
-\item Flight path points colored by altitude (YlOrRd palette)
-\item Interactive popups with coordinate information
-\item Legend identifying map elements
+\item \strong{Markers}:
+\itemize{
+\item Green - Deployment point
+\item Orange - Landing point
+}
+\item \strong{Polygons}:
+\itemize{
+\item Gray - DSM coverage area (20\\% opacity)
+\item Red - Flight corridor (20\\% opacity)
+}
+\item \strong{Path}:
+\itemize{
+\item Colored points - Altitude gradient (YlOrRd palette)
+\item Black dashed line - Direct start-end connection
+}
+\item \strong{Interactive Features}:
+\itemize{
+\item Popups with coordinate details on click
+\item Legend identifying all map elements
+}
 }
 }
 \description{
-Generates a Leaflet map visualizing a flight path with start/end points and
-trajectory colored by altitude. The map includes interactive popups with
-coordinate information.
+Generates an interactive Leaflet map visualizing flight path components including:
+\itemize{
+\item Full flight trajectory colored by altitude
+\item Start/end points with distinct markers
+\item DSM coverage area and flight corridor
+}
+}
+\details{
+The map provides these interactive elements:
+\itemize{
+\item Clickable points showing coordinate information
+\item Color-coded altitude visualization (using YlOrRd palette)
+\item Clear visual distinction between different path components
+\item Automatic zoom to fit all elements
+}
 }
 \examples{
 \dontrun{
-# Create a flight path first
-flight_data <- create_flight_path(...)
+# First create flight path
+flight_data <- create_sagl_flight_path(
+  deploy_coords = c(580000, 5510000),
+  land_coords = c(580500, 5510500),
+  dsm_path = "path/to/dsm.tif"
+)
 
-# Generate and display the map
+# Generate and display map
 flight_map <- plot_flight_map(flight_data)
 flight_map
+
+# Save to HTML
+htmlwidgets::saveWidget(flight_map, "flight_path_map.html")
 }
 
+}
+\seealso{
+Related functions:
+\itemize{
+\item \code{\link{plot_flight_path}} for 2D profile view
+\item \code{\link{create_sagl_flight_path}} to generate required input
+\item \code{\link[leaflet]{leaflet}} for advanced map customization
+}
 }

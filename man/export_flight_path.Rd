@@ -2,52 +2,107 @@
 % Please edit documentation in R/export_flight_path.R
 \name{export_flight_path}
 \alias{export_flight_path}
-\title{Export flight path to CSV format}
+\title{Export Flight Path to CSV/KML Formats}
 \usage{
-export_flight_path(flight_path, output_path, include_headers = TRUE)
+export_flight_path(
+  flight_path,
+  output_path,
+  include_headers = TRUE,
+  exportkml = FALSE
+)
 }
 \arguments{
-\item{flight_path}{Flight path object created by \code{create_flight_path()}, containing:
+\item{flight_path}{Flight path object created by \code{\link{create_sagl_flight_path}} containing:
 \itemize{
-\item \code{final_coords} - Data frame with X, Y, Z coordinates
-\item \code{parameters$crs} - Original coordinate reference system
+\item \code{final_coords}: Data frame with X, Y, Z coordinates and Speed
+\item \code{parameters$crs}: Original coordinate reference system
+\item \code{parameters$H}: Flight height parameter (for folder naming)
+\item \code{parameters$angle}: Sensor angle (for folder naming)
+\item \code{aoi_kml}: Flight corridor polygon (for KML export)
 }}
 
-\item{output_path}{Path where the CSV file should be saved (character)}
+\item{output_path}{Character string specifying directory path for output files}
 
-\item{include_headers}{Logical indicating whether to include column headers in output
-(default = TRUE). When FALSE, outputs only Latitude, Longitude, Altitude columns.}
+\item{include_headers}{Logical indicating whether to include full column headers (default = TRUE).
+When FALSE, exports minimal 3-column format (Latitude, Longitude, Altitude).}
+
+\item{exportkml}{Logical indicating whether to create additional KML file (default = FALSE)}
 }
 \value{
-Invisibly returns NULL. Writes CSV file to specified path with columns:
+Invisibly returns NULL. Creates these output files:
 \itemize{
-\item WP - Waypoint number
-\item Latitude - WGS84 latitude (decimal degrees)
-\item Longitude - WGS84 longitude (decimal degrees)
-\item AltitudeAMSL - Altitude above mean sea level (meters)
-\item Speed - Flight speed (m/s)
-\item Picture - Logical for camera trigger (always FALSE in current implementation)
-\item UavYaw - Drone yaw angle (currently unused)
-\item CameraTilt - Gimbal tilt angle (currently unused)
-\item WaitTime - Waypoint hold time (currently unused)
+\item \strong{CSV File} containing:
+\itemize{
+\item Full format (when \code{include_headers = TRUE}):
+\itemize{
+\item WP: Waypoint number
+\item Latitude, Longitude: WGS84 coordinates
+\item AltitudeAMSL: Elevation in meters
+\item Speed: Flight speed (m/s)
+\item Picture: Camera trigger flag
+\item UavYaw, CameraTilt, WaitTime: Reserved for future use
 }
-When \code{include_headers = FALSE}, outputs only Latitude, Longitude, Altitude columns.
+\item Minimal format (when \code{include_headers = FALSE}):
+Only Latitude, Longitude, Altitude columns
+}
+\item \strong{KML File} (when \code{exportkml = TRUE}):
+Flight corridor polygon for visualization in Google Earth/QGIS
+}
 }
 \description{
-Converts a flight path object to CSV format suitable for drone flight controllers,
-with options to include/exclude headers and set flight speed. The function handles
-coordinate transformation to WGS84 (EPSG:4326) automatically.
+Exports flight path data to industry-standard formats for drone operations, with automatic
+coordinate transformation to WGS84 (EPSG:4326). Creates organized output folders with
+version control to prevent accidental overwrites.
 }
+\details{
+Key features:
+\itemize{
+\item Automatic coordinate transformation to WGS84 (Lat/Lon)
+\item Versioned output folders (0_FlightPath_H_angle, 1_FlightPath_H_angle, etc.)
+\item Multiple export options (full CSV headers or minimal waypoint format)
+\item Optional KML export for visualization in GIS software
+\item Clear console feedback about export status
+}
+}
+\section{Folder Structure}{
+
+Creates automatically numbered folders to prevent overwrites:
+\preformatted{
+output_path/
+  0_FlightPath_H_angle/
+    └── 0_FlightPath_H_angle.csv
+    └── 0_FlightPath_H_angle.kml (if exportkml=TRUE)
+  1_FlightPath_H_angle/ (if 0_ exists)
+  ...
+}
+}
+
 \examples{
 \dontrun{
 # Create flight path first
-path <- create_flight_path(...)
+fp <- create_sagl_flight_path(
+  deploy_coords = c(580000, 5510000),
+  land_coords = c(580500, 5510500),
+  dsm_path = "path/to/dsm.tif",
+  H = 50,
+  angle = 30
+)
 
-# Export with headers
-export_flight_path(path, "flight_plan.csv")
+# Export to default CSV with headers
+export_flight_path(fp, "output/flight_plans")
 
-# Export without headers for simple controllers
-export_flight_path(path, "minimal_plan.csv", include_headers = FALSE)
+# Export minimal format without headers
+export_flight_path(fp, "output/minimal_plans", include_headers = FALSE)
+
+# Export both CSV and KML
+export_flight_path(fp, "output/full_export", exportkml = TRUE)
 }
 
+}
+\seealso{
+Related functions:
+\itemize{
+\item \code{\link{create_sagl_flight_path}} to generate exportable flight paths
+\item \code{\link{plot_flight_map}} for visual verification before export
+}
 }
