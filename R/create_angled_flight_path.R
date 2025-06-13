@@ -55,6 +55,7 @@
 #'   H = 10
 #' )
 #' }
+#' @export
 create_angled_flight_path <- function(deploy_coords, land_coords, dsm_path, N = 100, H = 10,
                                       sensorangle = 0, crs_proj = "EPSG:32632", minDist = 1,
                                       speed_p = 5, calfig_params = NULL) {
